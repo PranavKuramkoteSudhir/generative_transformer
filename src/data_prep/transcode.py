@@ -68,7 +68,7 @@ class Tokenizer:
                 if word in key:
                     word_list.append(key[word])
                 else:
-                    pass
+                    word_list.append('<unknown>')
             #remove spaces bw puctuations and words
             s1=' '.join(word_list)
             s2=re.sub("\s+([\_,!?;:.()%'])", r"\1",s1)
