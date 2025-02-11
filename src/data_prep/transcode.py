@@ -5,6 +5,12 @@ from src.logger import logging
 from src.exceptions import CustomException
 from src.utils import get_text
 
+"""
+
+This is just a demonstration for the understanding of BPE tokenization, I will end up using the tiktokenizer while working on the model anyways
+
+"""
+
 class Tokenizer:
     """
     
