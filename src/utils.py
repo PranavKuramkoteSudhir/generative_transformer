@@ -21,7 +21,7 @@ def get_text(file_path):
         for path in dirs:
             with open(path, "r", encoding="utf-8") as file:
                 text+=file.read()
-            text+='<EOT>'
+            text+='<|endoftext|>'
         logging.info(f'text extraction completed from {file_path}. \nno. of file found: {len(dirs)}\nsample text: {text[:50]}')
         return text
     except Exception as e:

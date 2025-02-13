@@ -92,4 +92,6 @@ if __name__=='__main__':
     encode_key,decode_key=tk.transcode(text)
     encoded_text=tk.encode(text,encode_key)
     decode_text=tk.decode(encoded_text,decode_key)
+    pos=iter(decode_text)
+    print(next(pos))
 

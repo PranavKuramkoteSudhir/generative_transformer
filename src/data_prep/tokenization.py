@@ -11,17 +11,17 @@ Create tokens and batch the data into multiple batches to feed into the model
 """
 
 class CustomDataset(Dataset):   
-    def __init__(self,tokenizer,data,context_len,stride):
+    def __init__(self,data,tokenizer,context_len,stride):
         try:
             self.input_id=[]
             self.target_id=[]
             logging.info('starting to encode data')
-            tokens=tokenizer.encode(data,allowed_special='<EOT>')
+            tokens=tokenizer.encode(data,allowed_special={'<|endoftext|>'})
 
             logging.info('Creating input and target chunks')
             for i in range(0,len(tokens)-context_len,stride):
-                params_chunk=data[i:i+context_len]
-                target_chunk=data[i+1:i+context_len+1]
+                params_chunk=tokens[i:i+context_len]
+                target_chunk=tokens[i+1:i+context_len+1]
                 self.input_id.append(torch.tensor(params_chunk))
                 self.target_id.append(torch.tensor(target_chunk))
         except Exception as e:
@@ -30,7 +30,7 @@ class CustomDataset(Dataset):
             
     def __len__(self):
         try:
-            return (self.input_id)
+            return (len(self.input_id))
         
         except Exception as e:
             logging.info('__.__ERROR OCCOURED__.__')
