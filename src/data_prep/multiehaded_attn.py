@@ -3,7 +3,7 @@ from src.exceptions import CustomException
 import torch
 import sys
 
-class multihead_attn(torch.nn.Module):
+class Multihead_attn(torch.nn.Module):
     def __init__(self,dIn,dOut,attnHeads,context,dropout=0.1,qkv_bias=False):
         try:
             super().__init__()
@@ -73,7 +73,7 @@ if __name__=='__main__':
 
     batch_size, context_length, d_in = batch.shape
     d_out = 6
-    mha = multihead_attn(d_in, d_out,2,context_length, 0.0,False )
+    mha = Multihead_attn(d_in, d_out,2,context_length, 0.0,False )
     context_vecs = mha(batch)
     print(context_vecs)
     print("context_vecs.shape:", context_vecs.shape)

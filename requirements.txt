@@ -3,5 +3,5 @@ numpy
 pytest
 tiktoken
 torch
-
+dotenv
 -e .
