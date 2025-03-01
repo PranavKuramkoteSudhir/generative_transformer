@@ -5,8 +5,8 @@ from src.exceptions import CustomException
 from dotenv import load_dotenv
 import torch
 
-from src.data_prep.multiehaded_attn import Multihead_attn
-from src.data_prep.transformer_components import Normalize, GELU_Activation, FeedForward 
+from src.transformer.components.multiehaded_attn import Multihead_attn
+from src.transformer.components.transformer_components import Normalize, GELU_Activation, FeedForward 
 
 class Transformer(torch.nn.Module):
     def __init__(self):
