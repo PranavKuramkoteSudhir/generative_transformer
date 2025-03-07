@@ -28,8 +28,9 @@ def text_to_token_ids(text, tokenizer=tiktoken.get_encoding('gpt2')):
 def generate_text(model,idx,max_new_tokens,context_size,temperature=0,top_k=None,eos_id=None):
     logging.info('running generate_text')
     try:
-        for _ in range(max_new_tokens):
-            context=idx[:,-context_size:]
+        context=idx[:,-context_size:]
+        for i in range(max_new_tokens):
+            context=context[:,-context_size:]
             with torch.no_grad():
                 logits=model(context)
                 logits=logits[:,-1,:]
@@ -45,7 +46,9 @@ def generate_text(model,idx,max_new_tokens,context_size,temperature=0,top_k=None
                 next_index=torch.argmax(logits,dim=-1,keepdim=True)
             if eos_id==next_index:
                 break
+            logging.info(f"Generated Token: {next_index.item()} -> {token_to_text(next_index)}")
             context=torch.cat([context,next_index],dim=1)
+            
         return context
     except Exception as e:
         logging.info('__Error Occoured__')

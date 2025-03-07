@@ -12,6 +12,7 @@ from src.data_prep.tokenization import CustomDataset
 from src.data_prep.data_load import CustomDataLoad
 from src.utils import get_text
 from src.generate import generate_text,token_to_text,text_to_token_ids
+from src.checkpoint import save_model
 
 def calc_loss(input,target,model,device):
     logging.info('running calc_loss')
@@ -130,12 +131,13 @@ if __name__=='__main__':
     model=GPTModel()
     model.to(device)
     
-    optimizer=torch.optim.AdamW(model.parameters(),lr=0.0004,weight_decay=0.01)
+    optimizer=torch.optim.AdamW(model.parameters(),lr=5e-4,weight_decay=0.01)
     epochs=5
 
     training_loop(model,data_load_train,data_load_test,optimizer,device,epochs,5,evaluation_iteration=5)
-    starter="In a few days Mr. Bingley returned Mr. Bennet’s visit, and sat about ten minutes with him in his library. He had entertained hopes of being admitted to a sight of the young ladies, of whose beauty he had heard much; but he saw only the father. The ladies were somewhat more fortunate, for they had the advantage of ascertaining, from an upper window, that he wore a blue coat and rode a black horse."
-    generated_tokens=generate_text(model,text_to_token_ids(text=starter),25,int(os.getenv('context_len')),1.4,35,None)
+    save_model(model,optimizer,'artifacts/models/model_and_optimizer.pth')
+    starter="This came as a surprize to alice she couldn't believe her eyes she didn't understand what was going one she was shocked to say the least"
+    generated_tokens=generate_text(model,text_to_token_ids(text=starter),100,int(os.getenv('context_len')),1.4,500,None)
     generated_text=token_to_text(token_ids=generated_tokens)
     logging.info(generated_text)
 

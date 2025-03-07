@@ -21,7 +21,7 @@ class Normalize(torch.nn.Module):
         try:
             mean=x.mean(dim=-1,keepdim=True)
             var=x.var(dim=-1,keepdim=True,unbiased=False)
-            x_norm=(x-mean)/torch.sqrt(var*self.eps)
+            x_norm=(x-mean)/torch.sqrt(var+self.eps)
             x_norm=(x_norm*self.scale) +self.shift
             return x_norm
         except Exception as e:

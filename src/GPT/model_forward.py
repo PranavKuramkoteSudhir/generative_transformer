@@ -1,7 +1,6 @@
 import os
 import sys
 
-from src.logger import logging
 from src.exceptions import CustomException
 
 import torch
